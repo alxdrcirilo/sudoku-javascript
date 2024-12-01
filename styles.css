@@ -1,0 +1,27 @@
+body {
+  color: #eaeaea;
+  background-color: #333333;
+  font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo",
+    "Courier", "monospace";
+  text-align: center;
+  padding: 20px;
+}
+
+.container {
+  display: block;
+  align-items: center;
+  justify-content: center;
+}
+
+.sudoku {
+  margin: 20px;
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+canvas {
+  image-rendering: pixelated;
+}
