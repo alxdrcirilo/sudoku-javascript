@@ -26,7 +26,7 @@ deploy: build ## Deploy project to GitHub Pages
 	cp index.html dist/.
 	cp styles.css dist/.
 	sed -i '' 's|dist/build.js|build.js|g' dist/index.html
-	gh-pages -d dist --cname alxdrcirilo.dev
+	bun run gh-pages -d dist --cname alxdrcirilo.dev
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
