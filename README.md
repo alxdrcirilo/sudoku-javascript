@@ -14,11 +14,11 @@ A simple [Sudoku](https://en.wikipedia.org/wiki/Sudoku) game written in JavaScri
 To set up the project locally, follow these steps:
 
 1. Clone the repository:  
-`git clone https://github.com/alxdrcirilo/sudoku-javascript.git`
+   `git clone https://github.com/alxdrcirilo/sudoku-javascript.git`
 2. Install dependencies:  
-`bun install`
+   `bun install`
 3. Run the project locally:  
-`bun run dev`
+   `bun run dev`
 
 > [!NOTE]
 > Check the [`Makefile`](Makefile) for more commands. You can run `make help` to get a list of available commands.
