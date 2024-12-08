@@ -122,6 +122,6 @@ prefill(grid);
 fill(grid);
 
 let visible = grid.slice();
-prune(visible, 55);
+prune(visible, 60);
 
 export { grid, visible };

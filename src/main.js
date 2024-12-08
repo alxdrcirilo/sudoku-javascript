@@ -2,17 +2,18 @@ import kaplay from "kaplay";
 import { grid, visible } from "./board.js";
 
 // Screen
-const WIDTH = 495;
-const HEIGHT = 495;
+const WIDTH = 486;
+const HEIGHT = 486;
 const CELL = WIDTH / 9;
 const OFFSET = 10;
 
 // Colors
 const BCKGD = [51, 51, 51];
 const BEIGE = [250, 240, 230];
-const BLACK = [0, 0, 0];
+const BLACK = [30, 30, 30];
+const ORANG = [150, 60, 60];
 const CORAL = [255, 127, 80];
-const GREEN = [100, 255, 100];
+const GREEN = [142, 177, 92];
 const WHITE = [255, 255, 255];
 
 // Timer
@@ -48,6 +49,20 @@ function drawTime() {
   ]);
 }
 
+/**
+ * Draws the remaining lives on the screen.
+ *
+ * This function displays the remaining lives as heart icons at a
+ * specified position on the screen.
+ */
+function drawLives() {
+  add([rect(160, 20), pos(310, 495 + 25), color(BCKGD)]);
+  add([text("Lives:", { size: 18 }), pos(310, 495 + 25), color(WHITE)]);
+  for (let i = 0; i < lives; i++) {
+    add([sprite("heart"), pos(390 + i * 20, 495 + 25)]);
+  }
+}
+
 // Update the timer every second
 const drawTimeInterval = setInterval(drawTime, 1000);
 
@@ -62,15 +77,20 @@ kaplay({
   background: "#333333",
   letterbox: false,
   debug: false,
-  pixelDensity: 5,
+  pixelDensity: 10,
+  font: "pixeloid",
+  crisp: true,
 });
 
 // Fonts
-loadFont("salmon", "assets/fonts/Salmon Typewriter 9 Regular.ttf");
+loadFont("pixeloid", "assets/fonts/PixeloidMono.ttf");
 
 // Sounds
 loadSound("correct", "assets/sounds/Misc 1.wav");
 loadSound("wrong", "assets/sounds/Misc 2.wav");
+
+// Sprites
+loadSprite("heart", "assets/images/heart.png");
 
 // Function to create a cell
 function createCell(row, col) {
@@ -87,7 +107,7 @@ function createCell(row, col) {
   add([
     text(`${digit != 0 ? digit : ""}`, { size: 26 }),
     pos(CELL * row + 30, CELL * col + 26),
-    color(BLACK),
+    color(ORANG),
   ]);
 
   if (digit == 0) {
@@ -118,7 +138,7 @@ function createCell(row, col) {
                 visible[row * 9 + col] = digit;
                 click = -1;
                 destroyAll();
-                DrawSudokuBoard();
+                drawSudokuBoard();
 
                 // Game won
                 if (!visible.includes(0)) {
@@ -142,7 +162,7 @@ function createCell(row, col) {
                 lives--;
                 click = -1;
                 destroyAll();
-                DrawSudokuBoard();
+                drawSudokuBoard();
 
                 // Game over
                 if (lives == 0) {
@@ -151,7 +171,7 @@ function createCell(row, col) {
                   add([rect(200, 50), pos(150, 220), color(BCKGD)]);
                   add([
                     text("Game Over!", { size: 32 }),
-                    pos(180, 230),
+                    pos(160, 230),
                     color(WHITE),
                   ]);
                   add([
@@ -172,13 +192,21 @@ function createCell(row, col) {
 }
 
 // Create grid cells
-function DrawSudokuBoard() {
+function drawSudokuBoard() {
   drawTime();
+  drawLives();
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
       createCell(row, col);
     }
   }
+
+  // Border
+  add([
+    rect(WIDTH + OFFSET * 2, HEIGHT + OFFSET * 2, { radius: 16, fill: false }),
+    pos(0, 0),
+    outline(4, rgb([200, 200, 200])),
+  ]);
 
   // Subgrids (3x3)
   for (let i = 0; i < 3; i++) {
@@ -186,10 +214,10 @@ function DrawSudokuBoard() {
       add([
         rect(CELL * 3, CELL * 3, { radius: 4, fill: false }),
         pos(CELL * 3 * i + OFFSET, CELL * 3 * j + OFFSET),
-        outline(6),
+        outline(6, rgb(BLACK)),
       ]);
     }
   }
 }
 
-DrawSudokuBoard();
+drawSudokuBoard();

@@ -31,4 +31,4 @@ You can change the number of randomly-pruned cells in the Sudoku board in the [`
 
 ### Fonts
 
-This project uses the [Salmon Typewriter](https://phildjii.itch.io/salmon-typewriter) font. Retrieved Nov 26, 2024, from <https://phildjii.itch.io/salmon-typewriter>.
+This project uses the [Pixeloid](https://ggbot.itch.io/pixeloid-font) font. Retrieved Dec 8, 2024, from <https://ggbot.itch.io/pixeloid-font>.
