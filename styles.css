@@ -1,16 +1,26 @@
+@font-face {
+  font-family: "Pixeloid";
+  src: url("assets/fonts/PixeloidMono.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   color: #eaeaea;
   background-color: #333333;
-  font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo",
-    "Courier", "monospace";
+  font-family: "Pixeloid", monospace;
   text-align: center;
   padding: 20px;
+  overflow: hidden;
 }
 
 .container {
   display: block;
   align-items: center;
   justify-content: center;
+  width: 500px;
+  margin: auto;
+  padding: auto;
 }
 
 .sudoku {

@@ -5672,18 +5672,19 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
   prefill(grid);
   fill(grid);
   var visible = grid.slice();
-  prune(visible, 55);
+  prune(visible, 60);
 
   // src/main.js
-  var WIDTH = 495;
-  var HEIGHT = 495;
+  var WIDTH = 486;
+  var HEIGHT = 486;
   var CELL = WIDTH / 9;
   var OFFSET = 10;
   var BCKGD = [51, 51, 51];
   var BEIGE = [250, 240, 230];
-  var BLACK = [0, 0, 0];
+  var BLACK = [30, 30, 30];
+  var ORANG = [150, 60, 60];
   var CORAL = [255, 127, 80];
-  var GREEN = [100, 255, 100];
+  var GREEN = [142, 177, 92];
   var WHITE = [255, 255, 255];
   var startTime = Date.now();
   var elapsedTime = 0;
@@ -5703,6 +5704,13 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       "time"
     ]);
   }
+  function drawLives() {
+    add([rect(160, 20), pos(310, 495 + 25), color(BCKGD)]);
+    add([text("Lives:", { size: 18 }), pos(310, 495 + 25), color(WHITE)]);
+    for (let i2 = 0; i2 < lives; i2++) {
+      add([sprite("heart"), pos(390 + i2 * 20, 495 + 25)]);
+    }
+  }
   var drawTimeInterval = setInterval(drawTime, 1e3);
   var lives = 5;
   var click = -1;
@@ -5713,11 +5721,14 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     background: "#333333",
     letterbox: false,
     debug: false,
-    pixelDensity: 5
+    pixelDensity: 10,
+    font: "pixeloid",
+    crisp: true
   });
-  loadFont("salmon", "assets/fonts/Salmon Typewriter 9 Regular.ttf");
+  loadFont("pixeloid", "assets/fonts/PixeloidMono.ttf");
   loadSound("correct", "assets/sounds/Misc 1.wav");
   loadSound("wrong", "assets/sounds/Misc 2.wav");
+  loadSprite("heart", "assets/images/heart.png");
   function createCell(row, col) {
     let digit = visible[row * 9 + col];
     const cell = add([
@@ -5730,7 +5741,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     add([
       text(`${digit != 0 ? digit : ""}`, { size: 26 }),
       pos(CELL * row + 30, CELL * col + 26),
-      color(BLACK)
+      color(ORANG)
     ]);
     if (digit == 0) {
       cell.onHover(() => {
@@ -5757,7 +5768,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
                   visible[row * 9 + col] = digit;
                   click = -1;
                   destroyAll();
-                  DrawSudokuBoard();
+                  drawSudokuBoard();
                   if (!visible.includes(0)) {
                     clearInterval(drawTimeInterval);
                     destroyAll();
@@ -5778,14 +5789,14 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
                   lives--;
                   click = -1;
                   destroyAll();
-                  DrawSudokuBoard();
+                  drawSudokuBoard();
                   if (lives == 0) {
                     clearInterval(drawTimeInterval);
                     destroyAll();
                     add([rect(200, 50), pos(150, 220), color(BCKGD)]);
                     add([
                       text("Game Over!", { size: 32 }),
-                      pos(180, 230),
+                      pos(160, 230),
                       color(WHITE)
                     ]);
                     add([
@@ -5804,22 +5815,28 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     }
     return cell;
   }
-  function DrawSudokuBoard() {
+  function drawSudokuBoard() {
     drawTime();
+    drawLives();
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {
         createCell(row, col);
       }
     }
+    add([
+      rect(WIDTH + OFFSET * 2, HEIGHT + OFFSET * 2, { radius: 16, fill: false }),
+      pos(0, 0),
+      outline(4, rgb([200, 200, 200]))
+    ]);
     for (let i2 = 0; i2 < 3; i2++) {
       for (let j = 0; j < 3; j++) {
         add([
           rect(CELL * 3, CELL * 3, { radius: 4, fill: false }),
           pos(CELL * 3 * i2 + OFFSET, CELL * 3 * j + OFFSET),
-          outline(6)
+          outline(6, rgb(BLACK))
         ]);
       }
     }
   }
-  DrawSudokuBoard();
+  drawSudokuBoard();
 })();
