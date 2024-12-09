@@ -5721,7 +5721,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
     background: "#333333",
     letterbox: false,
     debug: false,
-    pixelDensity: 10,
+    pixelDensity: 5,
     font: "pixeloid",
     crisp: true
   });
