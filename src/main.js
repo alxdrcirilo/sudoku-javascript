@@ -77,7 +77,7 @@ kaplay({
   background: "#333333",
   letterbox: false,
   debug: false,
-  pixelDensity: 10,
+  pixelDensity: 5,
   font: "pixeloid",
   crisp: true,
 });
