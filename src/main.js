@@ -100,7 +100,7 @@ function createCell(row, col) {
     pos(CELL * row + OFFSET, CELL * col + OFFSET),
     digit != 0 ? color(BEIGE) : color(WHITE),
     area(),
-    outline(1),
+    outline(2),
   ]);
 
   // Digit
