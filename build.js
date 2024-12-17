@@ -5736,7 +5736,7 @@ vec4 frag(vec2 pos, vec2 uv, vec4 color, sampler2D tex) {
       pos(CELL * row + OFFSET, CELL * col + OFFSET),
       digit != 0 ? color(BEIGE) : color(WHITE),
       area(),
-      outline(1)
+      outline(2)
     ]);
     add([
       text(`${digit != 0 ? digit : ""}`, { size: 26 }),
